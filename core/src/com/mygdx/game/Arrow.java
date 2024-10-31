@@ -9,34 +9,37 @@ import com.badlogic.gdx.utils.Pool;
 public class Arrow implements Pool.Poolable {
     Utils utils = new Utils();
     private final Vector2 position = new Vector2();
-    boolean isAlive = false;
+    boolean isAlive = true;
     boolean isMoving = false;
     private Texture arrowTexture;
 
     public void init(float posX, float posY) {
         arrowTexture = new Texture(Gdx.files.internal("arrow.png"));
         position.set(posX,  posY);
-        isAlive = false;
+        isAlive = true;
     }
 
     public void update (float delta, SpriteBatch batch) {
         if ( utils.isOutOfScreen(position)) {
             isAlive = false;
         } else if (isMoving) {
-            position.add(1*delta*60, 0);
+            this.position.add(1*delta*60, 0);
+        } else {
+            // vai pegar a posição do personagem
+//            this.position.set(characterPos.x, characterPos.y);
         }
 
         // render updates
         batch.draw(arrowTexture, position.x, position.y);
     }
 
-    public void setMoving(boolean moving) {
-        this.isMoving = moving;
+    public void fire() {
+        this.isMoving = true;
     }
 
     @Override
     public void reset() {
-        position.set(0,0);
+        this.position.set(0,0);
         isAlive = false;
     }
 }

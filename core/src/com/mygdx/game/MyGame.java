@@ -2,60 +2,44 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import java.util.ArrayList;
 
 public class MyGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	MyInputProcessor inputProcessor;
-	Arrow arrow = new Arrow();
-//	private final ArrayList<Arrow> activeArrows = new ArrayList<Arrow>();
-
-//	private final Pool<Arrow> arrowPool = new Pool<Arrow>() {
-//		@Override
-//		protected Arrow newObject() {
-//			return new Arrow();
-//		}
-//	};
-
-//	public void update(float delta) {
-//		// Nova Bala
-//		Arrow item = arrowPool.obtain();
-//		item.init(2, 2);
-//		activeArrows.add(item);
-//
-//		// Retorna balas usadas ao pool
-//		Arrow arrowItem;
-//		final int listSize = activeArrows.size();
-//		for (int i = listSize; --i >= 0;) {
-//			arrowItem = activeArrows.get(i);
-//			if (!arrowItem.isAlive) {
-//				activeArrows.remove(i);
-//				arrowPool.free(arrowItem);
-//			}
-//		}
-//	}
+	private final Array<Arrow> activeArrows = new Array<Arrow>();
+	private final ArrowPool arrowPool = new ArrowPool();
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		Gdx.input.setInputProcessor(new MyInputProcessor(arrow));
-		arrow.init(10,10);
-
-
+		Gdx.input.setInputProcessor(new MyInputProcessor(arrowPool, activeArrows));
 	}
 
 	@Override
 	public void render() {
-		float deltaTime = Gdx.graphics.getDeltaTime();
 		ScreenUtils.clear(0, 0, 1, 1);
+		float deltaTime = Gdx.graphics.getDeltaTime();
 		batch.begin();
-		arrow.update(deltaTime, batch);
+
+		for (Arrow arrow : activeArrows) {
+			arrow.update(deltaTime, batch);
+		}
 		batch.end();
+
+
+		// Libera as balas que não mais ativas
+		for (Arrow arrow : activeArrows) {
+
+			if (!arrow.isAlive) {
+
+				arrowPool.free(arrow);
+				activeArrows.removeValue(arrow, true);
+			}
+		}
 	}
 	
 	@Override
