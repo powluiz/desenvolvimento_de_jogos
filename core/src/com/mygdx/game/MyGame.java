@@ -4,60 +4,60 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.util.ArrayList;
 
 public class MyGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
-	int xPos = 0, yPos = 0;
-	int xTarget, yTarget = 0;
-	int step = 3;
 	MyInputProcessor inputProcessor = new MyInputProcessor();
-	MyTextInputListener textInputListener = new MyTextInputListener();
+	Arrow arrow = new Arrow();
+//	private final ArrayList<Arrow> activeArrows = new ArrayList<Arrow>();
+
+//	private final Pool<Arrow> arrowPool = new Pool<Arrow>() {
+//		@Override
+//		protected Arrow newObject() {
+//			return new Arrow();
+//		}
+//	};
+
+//	public void update(float delta) {
+//		// Nova Bala
+//		Arrow item = arrowPool.obtain();
+//		item.init(2, 2);
+//		activeArrows.add(item);
+//
+//		// Retorna balas usadas ao pool
+//		Arrow arrowItem;
+//		final int listSize = activeArrows.size();
+//		for (int i = listSize; --i >= 0;) {
+//			arrowItem = activeArrows.get(i);
+//			if (!arrowItem.isAlive) {
+//				activeArrows.remove(i);
+//				arrowPool.free(arrowItem);
+//			}
+//		}
+//	}
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		Gdx.input.setInputProcessor(inputProcessor);
-		Gdx.input.getTextInput(textInputListener, "Título", "Valor inicial do textfield", "Dica de preenchimento" );
+		arrow.init(10,10);
 	}
 
 	@Override
 	public void render() {
-		// Altera a posição, quando houver interação
-		if (Gdx.input.isTouched()) {
-			xTarget = Gdx.input.getX() - img.getWidth() / 2;
-			yTarget = Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight() / 2;
-		}
-
-		// distância horizontal e vertical entre a textura e a posição do clique
-		int xDif = xTarget - xPos;
-		int yDif = yTarget - yPos;
-
-		// move horizontalmente
-		if (Math.abs(xDif) > step) {
-			xPos += (xDif > 0) ? step : -step;
-		} else {
-			xPos = xTarget;
-		}
-
-		// move verticalmente
-		if (Math.abs(yDif) > step) {
-			yPos += (yDif > 0) ? step : -step;
-		} else {
-			yPos = yTarget;
-		}
-
+		float deltaTime = Gdx.graphics.getDeltaTime();
 		ScreenUtils.clear(0, 0, 1, 1);
 		batch.begin();
-		batch.draw(img, xPos, yPos);
+		arrow.update(deltaTime, batch);
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }
