@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MyGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	MyInputProcessor inputProcessor = new MyInputProcessor();
+	MyInputProcessor inputProcessor;
 	Arrow arrow = new Arrow();
 //	private final ArrayList<Arrow> activeArrows = new ArrayList<Arrow>();
 
@@ -43,8 +43,10 @@ public class MyGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		Gdx.input.setInputProcessor(inputProcessor);
+		Gdx.input.setInputProcessor(new MyInputProcessor(arrow));
 		arrow.init(10,10);
+
+
 	}
 
 	@Override

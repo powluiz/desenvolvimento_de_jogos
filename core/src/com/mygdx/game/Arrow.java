@@ -10,23 +10,28 @@ public class Arrow implements Pool.Poolable {
     Utils utils = new Utils();
     private final Vector2 position = new Vector2();
     boolean isAlive = false;
+    boolean isMoving = false;
     private Texture arrowTexture;
 
     public void init(float posX, float posY) {
         arrowTexture = new Texture(Gdx.files.internal("arrow.png"));
         position.set(posX,  posY);
-        isAlive = true;
+        isAlive = false;
     }
 
     public void update (float delta, SpriteBatch batch) {
-        if (utils.isOutOfScreen(position)) {
+        if ( utils.isOutOfScreen(position)) {
             isAlive = false;
-        } else {
+        } else if (isMoving) {
             position.add(1*delta*60, 0);
         }
 
         // render updates
         batch.draw(arrowTexture, position.x, position.y);
+    }
+
+    public void setMoving(boolean moving) {
+        this.isMoving = moving;
     }
 
     @Override
