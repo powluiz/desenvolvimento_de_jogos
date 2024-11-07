@@ -7,28 +7,27 @@ public class MyInputProcessor extends InputAdapter {
     Array<Arrow> activeArrows;
     ArrowPool arrowPool;
 
+    public MyInputProcessor(ArrowPool arrowPool, Array<Arrow> activeArrows) {
+        this.activeArrows = activeArrows;
+        this.arrowPool = arrowPool;
+        this.createArrow(); // flecha inicial
+    }
+
     public void createArrow() {
         Arrow arrow = arrowPool.obtain();
         activeArrows.add(arrow);
         arrow.init(10,10); // deve inicializar com a posição do jogador
     }
 
-    public void fireArrow () {
-        if (activeArrows.size > 0) {
-            for (Arrow arrow : activeArrows) {
-                // pega a próxima flecha engatilhada
-                if (!arrow.isMoving) {
-                    arrow.fire();
-                }
-            }
-        }
+    public void fireArrow() {
         this.createArrow();
-    }
-
-    public MyInputProcessor(ArrowPool arrowPool, Array<Arrow> activeArrows) {
-        this.activeArrows = activeArrows;
-        this.arrowPool = arrowPool;
-        this.createArrow(); // flecha inicial
+        boolean isFirstArrow = true;
+        for (Arrow arrow : activeArrows) {
+            if (!isFirstArrow) {
+                arrow.fire();
+            }
+            isFirstArrow = false;
+        }
     }
 
     @Override

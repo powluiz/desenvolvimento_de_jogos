@@ -16,7 +16,8 @@ public class MyGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		Gdx.input.setInputProcessor(new MyInputProcessor(arrowPool, activeArrows));
+		inputProcessor = new MyInputProcessor(arrowPool, activeArrows);
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
 	@Override
@@ -30,12 +31,9 @@ public class MyGame extends ApplicationAdapter {
 		}
 		batch.end();
 
-
 		// Libera as balas que não mais ativas
 		for (Arrow arrow : activeArrows) {
-
 			if (!arrow.isAlive) {
-
 				arrowPool.free(arrow);
 				activeArrows.removeValue(arrow, true);
 			}
