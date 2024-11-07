@@ -116,23 +116,6 @@ public class GameManager {
         }
     }
 
-//    public void checkCollisions() {
-//        Iterator<Arrow> arrowIterator = activeArrows.iterator();
-//        while (arrowIterator.hasNext()) {
-//            Arrow arrow = arrowIterator.next();
-//
-//            Iterator<Balloon> balloonIterator = activeBalloons.iterator();
-//            while (balloonIterator.hasNext()) {
-//                Balloon balloon = balloonIterator.next();
-//                if (isCollision(arrow.collisionBox, balloon.collisionBox)) {
-//                    arrowIterator.remove();
-//                    balloonIterator.remove();
-//                    break;
-//                }
-//            }
-//        }
-//    }
-
     public void dispose() {
         // Limpeza de recursos
     }
