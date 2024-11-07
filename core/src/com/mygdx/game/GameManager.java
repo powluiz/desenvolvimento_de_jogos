@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -11,6 +12,9 @@ import com.mygdx.game.arrow.ArrowPool;
 import com.mygdx.game.balloon.Balloon;
 import com.mygdx.game.balloon.BalloonPool;
 import com.mygdx.game.player.Player;
+import org.w3c.dom.css.Rect;
+
+import java.util.Iterator;
 
 public class GameManager {
     public final Player player;
@@ -47,6 +51,7 @@ public class GameManager {
             }
         }
         spawnBalloonRandomly(deltaTime);
+        checkCollisions();
     }
 
     // renderiza frames do jogo
@@ -93,6 +98,40 @@ public class GameManager {
             activeBalloons.add(balloon);
         }
     }
+
+    public boolean isCollision(Rectangle firstInstance, Rectangle secondInstance) {
+        return firstInstance.overlaps(secondInstance);
+    }
+
+    public void checkCollisions() {
+        for (Arrow arrow : activeArrows) {
+            for (Balloon balloon : activeBalloons) {
+                if (isCollision(arrow.collisionBox, balloon.collisionBox)) {
+                    balloonPool.free(balloon);
+                    activeBalloons.removeValue(balloon, true);
+                    arrowPool.free(arrow);
+                    activeArrows.removeValue(arrow, true);
+                }
+            }
+        }
+    }
+
+//    public void checkCollisions() {
+//        Iterator<Arrow> arrowIterator = activeArrows.iterator();
+//        while (arrowIterator.hasNext()) {
+//            Arrow arrow = arrowIterator.next();
+//
+//            Iterator<Balloon> balloonIterator = activeBalloons.iterator();
+//            while (balloonIterator.hasNext()) {
+//                Balloon balloon = balloonIterator.next();
+//                if (isCollision(arrow.collisionBox, balloon.collisionBox)) {
+//                    arrowIterator.remove();
+//                    balloonIterator.remove();
+//                    break;
+//                }
+//            }
+//        }
+//    }
 
     public void dispose() {
         // Limpeza de recursos

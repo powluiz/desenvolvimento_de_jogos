@@ -3,6 +3,7 @@ package com.mygdx.game.arrow;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.GameAssetManager;
@@ -16,6 +17,7 @@ public class Arrow implements Pool.Poolable {
     private Texture texture;
     public int speed;
     private float positionOffset;
+    public Rectangle collisionBox;
 
     public void init(Vector2 playerPosition) {
         this.texture = GameAssetManager.getInstance().get(GameAssetManager.arrowTexture);
@@ -24,6 +26,8 @@ public class Arrow implements Pool.Poolable {
         this.speed = 160;
         this.positionOffset = 25f;
         this.position.set(playerPosition.x + this.positionOffset,  playerPosition.y);
+        this.collisionBox = new Rectangle(playerPosition.x, playerPosition.y,
+                this.texture.getWidth(), this.texture.getHeight());
     }
 
     public void update (float deltaTime, Vector2 playerPosition) {
@@ -34,6 +38,7 @@ public class Arrow implements Pool.Poolable {
         } else {
             this.position.set(playerPosition.x + this.positionOffset, playerPosition.y);
         }
+        collisionBox.setPosition(this.position.x, this.position.y);
     }
 
     public void render (SpriteBatch batch) {
