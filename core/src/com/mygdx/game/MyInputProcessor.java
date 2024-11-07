@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.arrow.Arrow;
+import com.mygdx.game.arrow.ArrowPool;
 
 public class MyInputProcessor extends InputAdapter {
     Array<Arrow> activeArrows;

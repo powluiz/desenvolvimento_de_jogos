@@ -1,12 +1,8 @@
-package com.mygdx.game;
+package com.mygdx.game.arrow;
 
 import com.badlogic.gdx.utils.Pool;
 
 public class ArrowPool extends Pool<Arrow> {
-
-    public ArrowPool(int init, int max) {
-        super(init, max);
-    }
 
     public ArrowPool(){
         super();

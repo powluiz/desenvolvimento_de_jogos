@@ -1,16 +1,17 @@
-package com.mygdx.game;
+package com.mygdx.game.arrow;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import com.mygdx.game.Utils;
 
 public class Arrow implements Pool.Poolable {
     Utils utils = new Utils();
-    private final Vector2 position = new Vector2();
-    boolean isAlive = true;
-    boolean isMoving = false;
+    public final Vector2 position = new Vector2();
+    public boolean isAlive = true;
+    public boolean isMoving = false;
     private Texture arrowTexture;
 
     public void init(float posX, float posY) {
