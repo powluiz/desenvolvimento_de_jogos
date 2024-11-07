@@ -9,4 +9,9 @@ public class Utils {
         float screenHeight = Gdx.graphics.getHeight();
         return position.x < 0 || position.x > screenWidth || position.y < 0 || position.y > screenHeight;
     }
+
+    public boolean isOutOfScreenTop(Vector2 position) {
+        float screenHeight = Gdx.graphics.getHeight();
+        return position.y > screenHeight;
+    }
 }

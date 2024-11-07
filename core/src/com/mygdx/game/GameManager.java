@@ -82,9 +82,12 @@ public class GameManager {
     }
 
     private void spawnBalloonRandomly(float deltaTime) {
-        if (MathUtils.randomBoolean(0.01f)) {
+        if (MathUtils.randomBoolean(0.05f)) {
             Balloon balloon = balloonPool.obtain();
-            Vector2 initialPosition = new Vector2(MathUtils.random(Gdx.graphics.getWidth()/2, Gdx.graphics.getWidth()), 0);
+            float startLimit = (float)Gdx.graphics.getWidth()/3;
+            float endLimit = (float)(Gdx.graphics.getWidth() - 25);
+            float balloonXPosition = MathUtils.random(startLimit, endLimit);
+            Vector2 initialPosition = new Vector2(balloonXPosition, 0);
             balloon.init(initialPosition);
             activeBalloons.add(balloon);
         }

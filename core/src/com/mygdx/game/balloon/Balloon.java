@@ -22,7 +22,7 @@ public class Balloon implements Pool.Poolable {
     }
 
     public void update (float delta) {
-        if (this.isHit || utils.isOutOfScreen(position)) {
+        if (this.isHit || utils.isOutOfScreenTop(position)) {
             isAlive = false;
         } else {
             this.position.add(0, 1*delta*60);
