@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
 public class GameInputProcessor extends InputAdapter {
@@ -15,7 +16,20 @@ public class GameInputProcessor extends InputAdapter {
     }
 
     public boolean keyDown(int i) {
-        // movimentacao vertical do personagem
-        return false;
+        if (i == Input.Keys.UP || i == Input.Keys.W) {
+            gameManager.player.isMovingUp = true;
+        } else if (i == Input.Keys.DOWN || i == Input.Keys.S) {
+            gameManager.player.isMovingDown = true;
+        }
+        return true;
+    }
+
+    public boolean keyUp(int i) {
+        if (i == Input.Keys.UP || i == Input.Keys.W) {
+            gameManager.player.isMovingUp = false;
+        } else if (i == Input.Keys.DOWN || i == Input.Keys.S) {
+            gameManager.player.isMovingDown = false;
+        }
+        return true;
     }
 }

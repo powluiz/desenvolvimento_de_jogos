@@ -10,26 +10,27 @@ import com.mygdx.game.arrow.Arrow;
 import com.mygdx.game.arrow.ArrowPool;
 import com.mygdx.game.balloon.Balloon;
 import com.mygdx.game.balloon.BalloonPool;
+import com.mygdx.game.player.Player;
 
 public class GameManager {
+    public final Player player;
 	private final Array<Arrow> activeArrows;
 	private final Array<Balloon> activeBalloons;
 	private final ArrowPool arrowPool;
 	private final BalloonPool balloonPool;
-//     private final Player player;
 
     public GameManager() {
+        player = new Player(new Vector2(10,10));
         activeArrows = new Array<Arrow>();
         activeBalloons = new Array<Balloon>();
         arrowPool = new ArrowPool();
         balloonPool = new BalloonPool();
-        // player = new Player();
-
         this.createArrow(); // flecha inicial
     }
 
     // atualiza a logica do jogo
     public void update(float deltaTime) {
+        player.update(deltaTime);
         for (Arrow arrow : activeArrows) {
 //            arrow.update(deltaTime, player.position);
             arrow.update(deltaTime, new Vector2(10, 10));
@@ -52,6 +53,7 @@ public class GameManager {
     public void render(SpriteBatch batch) {
         ScreenUtils.clear(0, 0, 1, 1);
 		batch.begin();
+        player.render(batch);
 
         for (Arrow arrow : activeArrows) {
             arrow.render(batch);
