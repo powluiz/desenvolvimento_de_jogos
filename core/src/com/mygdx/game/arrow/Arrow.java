@@ -14,23 +14,23 @@ public class Arrow implements Pool.Poolable {
     public boolean isMoving = false;
     private Texture arrowTexture;
 
-    public void init(float posX, float posY) {
+    public void init(Vector2 playerPosition) {
         arrowTexture = new Texture(Gdx.files.internal("arrow.png"));
-        position.set(posX,  posY);
+        position.set(playerPosition.x,  playerPosition.y);
         isAlive = true;
     }
 
-    public void update (float delta, SpriteBatch batch) {
-        if ( utils.isOutOfScreen(position)) {
+    public void update (float deltaTime, Vector2 playerPosition) {
+        if ( utils.isOutOfScreen(this.position)) {
             isAlive = false;
         } else if (isMoving) {
-            this.position.add(1*delta*60, 0);
+            this.position.add(1*deltaTime*60, 0);
         } else {
-            // vai pegar a posição do personagem
-//            this.position.set(characterPos.x, characterPos.y);
+            this.position.set(playerPosition.x, playerPosition.y);
         }
+    }
 
-        // render updates
+    public void render (SpriteBatch batch) {
         batch.draw(arrowTexture, position.x, position.y);
     }
 
