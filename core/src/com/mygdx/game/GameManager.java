@@ -32,8 +32,7 @@ public class GameManager {
     public void update(float deltaTime) {
         player.update(deltaTime);
         for (Arrow arrow : activeArrows) {
-//            arrow.update(deltaTime, player.position);
-            arrow.update(deltaTime, new Vector2(10, 10));
+            arrow.update(deltaTime, player.position);
 			if (!arrow.isAlive) {
 				arrowPool.free(arrow);
 				activeArrows.removeValue(arrow, true);
@@ -50,6 +49,7 @@ public class GameManager {
         spawnBalloonRandomly(deltaTime);
     }
 
+    // renderiza frames do jogo
     public void render(SpriteBatch batch) {
         ScreenUtils.clear(0, 0, 1, 1);
 		batch.begin();
@@ -67,8 +67,7 @@ public class GameManager {
 
     public void createArrow() {
         Arrow arrow = arrowPool.obtain();
-//        arrow.init(deltaTime, player.position);
-        arrow.init(new Vector2(10, 10));
+        arrow.init(player.position);
         activeArrows.add(arrow);
     }
 

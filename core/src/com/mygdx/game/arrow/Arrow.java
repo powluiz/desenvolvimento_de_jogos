@@ -13,20 +13,25 @@ public class Arrow implements Pool.Poolable {
     public boolean isAlive = true;
     public boolean isMoving = false;
     private Texture arrowTexture;
+    public int speed;
+    private float positionOffset;
 
     public void init(Vector2 playerPosition) {
-        arrowTexture = new Texture(Gdx.files.internal("arrow.png"));
-        position.set(playerPosition.x,  playerPosition.y);
-        isAlive = true;
+        this.arrowTexture = new Texture(Gdx.files.internal("arrow.png"));
+        this.isAlive = true;
+        this.isMoving = false;
+        this.speed = 160;
+        this.positionOffset = 25f;
+        this.position.set(playerPosition.x + this.positionOffset,  playerPosition.y);
     }
 
     public void update (float deltaTime, Vector2 playerPosition) {
-        if ( utils.isOutOfScreen(this.position)) {
+        if (utils.isOutOfScreenRight(this.position.x)) {
             isAlive = false;
         } else if (isMoving) {
-            this.position.add(1*deltaTime*60, 0);
+            this.position.add(deltaTime * this.speed, 0);
         } else {
-            this.position.set(playerPosition.x, playerPosition.y);
+            this.position.set(playerPosition.x + this.positionOffset, playerPosition.y);
         }
     }
 
@@ -41,6 +46,7 @@ public class Arrow implements Pool.Poolable {
     @Override
     public void reset() {
         this.position.set(0,0);
+        isMoving = false;
         isAlive = false;
     }
 }

@@ -18,4 +18,13 @@ public class Utils {
     public boolean isOutOfScreenBottom(float positionY) {
         return positionY < 0;
     }
+
+    public boolean isOutOfScreenLeft(float positionX) {
+        return positionX < 0;
+    }
+
+    public boolean isOutOfScreenRight(float positionX) {
+        float screenWidth = Gdx.graphics.getWidth();
+        return positionX > screenWidth;
+    }
 }
