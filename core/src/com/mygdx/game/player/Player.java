@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.GameAssetManager;
 import com.mygdx.game.Utils;
 
 public class Player {
@@ -14,9 +15,9 @@ public class Player {
     public boolean isMovingDown;
     public int speed;
 
-    public Player (Vector2 initialPosition) {
-        this.texture = new Texture(Gdx.files.internal("character.png"));
-        this.position = new Vector2(initialPosition);
+    public Player () {
+        this.texture = GameAssetManager.getInstance().get(GameAssetManager.playerTexture);
+        this.position = new Vector2(10,10);
         this.isMovingUp = false;
         this.isMovingDown = false;
         this.speed = 120;

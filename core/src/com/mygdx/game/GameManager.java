@@ -20,7 +20,7 @@ public class GameManager {
 	private final BalloonPool balloonPool;
 
     public GameManager() {
-        player = new Player(new Vector2(10,10));
+        player = new Player();
         activeArrows = new Array<Arrow>();
         activeBalloons = new Array<Balloon>();
         arrowPool = new ArrowPool();

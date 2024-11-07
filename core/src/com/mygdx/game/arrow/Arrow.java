@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import com.mygdx.game.GameAssetManager;
 import com.mygdx.game.Utils;
 
 public class Arrow implements Pool.Poolable {
@@ -12,12 +13,12 @@ public class Arrow implements Pool.Poolable {
     public final Vector2 position = new Vector2();
     public boolean isAlive = true;
     public boolean isMoving = false;
-    private Texture arrowTexture;
+    private Texture texture;
     public int speed;
     private float positionOffset;
 
     public void init(Vector2 playerPosition) {
-        this.arrowTexture = new Texture(Gdx.files.internal("arrow.png"));
+        this.texture = GameAssetManager.getInstance().get(GameAssetManager.arrowTexture);
         this.isAlive = true;
         this.isMoving = false;
         this.speed = 160;
@@ -36,12 +37,14 @@ public class Arrow implements Pool.Poolable {
     }
 
     public void render (SpriteBatch batch) {
-        batch.draw(arrowTexture, position.x, position.y);
+        batch.draw(texture, position.x, position.y);
     }
 
     public void fire() {
         this.isMoving = true;
     }
+
+
 
     @Override
     public void reset() {

@@ -5,13 +5,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MyGame extends ApplicationAdapter {
+public class  MyGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	private GameManager gameManager;
 	GameInputProcessor gameInputProcessor;
 
 	@Override
 	public void create () {
+		GameAssetManager.getInstance().load();
+		GameAssetManager.getInstance().finishLoading();
 		batch = new SpriteBatch();
 		gameManager = new GameManager();
 		gameInputProcessor = new GameInputProcessor(gameManager);

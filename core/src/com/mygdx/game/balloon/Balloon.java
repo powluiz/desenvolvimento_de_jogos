@@ -5,18 +5,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import com.mygdx.game.GameAssetManager;
 import com.mygdx.game.Utils;
 
 public class Balloon implements Pool.Poolable {
-
     Utils utils = new Utils();
     public final Vector2 position = new Vector2();
     public boolean isAlive = true;
     public boolean isHit = false;
-    private Texture balloonTexture;
+    private Texture texture;
 
     public void init(Vector2 initialPosition) {
-        balloonTexture = new Texture(Gdx.files.internal("balloon.png"));
+        this.texture = GameAssetManager.getInstance().get(GameAssetManager.balloonTexture);
         position.set(initialPosition.x,  initialPosition.y);
         isAlive = true;
     }
@@ -30,7 +30,7 @@ public class Balloon implements Pool.Poolable {
     }
 
     public void render (SpriteBatch batch) {
-        batch.draw(balloonTexture, position.x, position.y);
+        batch.draw(texture, position.x, position.y);
     }
 
     @Override
