@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,9 +14,6 @@ import com.mygdx.game.arrow.ArrowPool;
 import com.mygdx.game.balloon.Balloon;
 import com.mygdx.game.balloon.BalloonPool;
 import com.mygdx.game.player.Player;
-import org.w3c.dom.css.Rect;
-
-import java.util.Iterator;
 
 public class GameManager {
     public final Player player;
@@ -22,6 +21,8 @@ public class GameManager {
 	private final Array<Balloon> activeBalloons;
 	private final ArrowPool arrowPool;
 	private final BalloonPool balloonPool;
+    private final Sound arrowFireSfx;
+    private final Sound balloonPopSfx;
 
     public GameManager() {
         player = new Player();
@@ -29,6 +30,8 @@ public class GameManager {
         activeBalloons = new Array<Balloon>();
         arrowPool = new ArrowPool();
         balloonPool = new BalloonPool();
+        arrowFireSfx = GameAssetManager.getInstance().get(GameAssetManager.arrowFireSfx);
+        balloonPopSfx = GameAssetManager.getInstance().get(GameAssetManager.balloonPopSfx);
         this.createArrow(); // flecha inicial
     }
 
@@ -82,6 +85,7 @@ public class GameManager {
         for (Arrow arrow : activeArrows) {
             if (!isFirstArrow) {
                 arrow.fire();
+                arrowFireSfx.play();
             }
             isFirstArrow = false;
         }
@@ -107,6 +111,7 @@ public class GameManager {
         for (Arrow arrow : activeArrows) {
             for (Balloon balloon : activeBalloons) {
                 if (isCollision(arrow.collisionBox, balloon.collisionBox)) {
+                    balloonPopSfx.play();
                     balloonPool.free(balloon);
                     activeBalloons.removeValue(balloon, true);
                     arrowPool.free(arrow);

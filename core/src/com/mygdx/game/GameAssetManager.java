@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class GameAssetManager extends AssetManager{
@@ -16,6 +17,14 @@ public class GameAssetManager extends AssetManager{
 
     public static final AssetDescriptor<Texture> balloonTexture =
             new AssetDescriptor<Texture>("balloon.png", Texture.class);
+
+    public static final AssetDescriptor<Sound> balloonPopSfx =
+            new AssetDescriptor<Sound>("balloon_pop.mp3", Sound.class);
+
+    public static final AssetDescriptor<Sound> arrowFireSfx =
+            new AssetDescriptor<Sound>("arrow_fire.mp3", Sound.class);
+
+
 
     // privado para evitar instanciacao externa
     private GameAssetManager() {
@@ -32,6 +41,8 @@ public class GameAssetManager extends AssetManager{
         self.load(playerTexture);
         self.load(arrowTexture);
         self.load(balloonTexture);
+        self.load(balloonPopSfx);
+        self.load(arrowFireSfx);
     }
 
     public void dispose(){
